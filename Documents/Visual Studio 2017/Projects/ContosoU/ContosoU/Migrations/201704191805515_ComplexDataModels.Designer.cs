@@ -7,13 +7,13 @@ namespace ContosoU.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class ComplexDataModels : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ComplexDataModels));
         
         string IMigrationMetadata.Id
         {
-            get { return "201704171535060_InitialCreate"; }
+            get { return "201704191805515_ComplexDataModels"; }
         }
         
         string IMigrationMetadata.Source
