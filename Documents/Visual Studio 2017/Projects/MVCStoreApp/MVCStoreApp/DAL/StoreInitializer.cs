@@ -15,44 +15,38 @@ namespace MVCStoreApp.DAL
             {
             new Book{BookID=5278, AuthorID=0001, GenreID=6676, Title="The Billionaire and the Bellboy", AuthorLastName="Daniel", AuthorFirstName="Elijah"},
             new Book{BookID=7609, AuthorID=0002, GenreID=6676, Title="Handsome Sentient Food", AuthorLastName="Tingle", AuthorFirstName="Chuck"},
-            new Book{BookID=8292, AuthorID=0002, GenreID=3928, Title="Dr. Chuck Tingle's Complete Guide to the Void", AuthorLastName="Tingle", AuthorFirstName="Chuck"},
-            new Book{BookID=4215, AuthorID=0002, GenreID=3928, Title="Dr. Chuck Tingle's Complete Guide to Romance", AuthorLastName="Tingle", AuthorFirstName="Chuck"},
-            new Book{BookID=2819, AuthorID=0002, GenreID=3928, Title="Dr. Chuck Tingle's Complete Guide to Sport", AuthorLastName="Tingle", AuthorFirstName="Chuck"},
-            new Book{BookID=0168,Title="Justice",EnrollmentDate=DateTime.Parse("2001-09-01")},
-            new Book{BookID=9261,Title="Norman",EnrollmentDate=DateTime.Parse("2003-09-01")},
-            new Book{BookID=4928,Title="Olivetto",EnrollmentDate=DateTime.Parse("2005-09-01")}
+            new Book{BookID=8292, AuthorID=4820, GenreID=3298, Title="Oral Sadism and the Vegetarian Personality", AuthorLastName="Ellenbogen", AuthorFirstName="Glenn"},
+            new Book{BookID=4215, AuthorID=2044, GenreID=5928, Title="Knitting with Dog Hair", AuthorLastName="Crolius", AuthorFirstName="Kendall"},
+            new Book{BookID=2819, AuthorID=0294, GenreID=5928, Title="How to Survive a Garden Gnome Attack", AuthorLastName="Sambuchino", AuthorFirstName="Chuck"},
+            new Book{BookID=0168, AuthorID=7392, GenreID=1344, Title="Does God Ever Speak Through Cats?", AuthorLastName="Evans", AuthorFirstName="David"},
+            new Book{BookID=9261, AuthorID=1284, GenreID=5928, Title="Goblinproofing One's Chicken Coop", AuthorLastName="Bakeley", AuthorFirstName="Reginald" },
+            new Book{BookID=4928, AuthorID=9031, GenreID=5729, Title="Teach Your Wife to be a Widow", AuthorLastName="Rogers", AuthorFirstName="Donald" }
             };
 
             books.ForEach(s => context.Books.Add(s));
             context.SaveChanges();
-            var courses = new List<Course>
+            var authors = new List<Author>
             {
-            new Course{CourseID=1050,Title="Chemistry",Credits=3,},
-            new Course{CourseID=4022,Title="Microeconomics",Credits=3,},
-            new Course{CourseID=4041,Title="Macroeconomics",Credits=3,},
-            new Course{CourseID=1045,Title="Calculus",Credits=4,},
-            new Course{CourseID=3141,Title="Trigonometry",Credits=4,},
-            new Course{CourseID=2021,Title="Composition",Credits=3,},
-            new Course{CourseID=2042,Title="Literature",Credits=4,}
+            new Author{AuthorID=0001,LastName="Daniel",FirstName="Elijah"},
+            new Author{AuthorID=0002,LastName="Tingle",FirstName="Chuck"},
+            new Author{AuthorID=4820,LastName="Ellenbogen",FirstName="Glenn"},
+            new Author{AuthorID=2044,LastName="Crolius",FirstName="Kendall"},
+            new Author{AuthorID=0294,LastName="Sambuchino",FirstName="Chuck"},
+            new Author{AuthorID=7392,LastName="Evans",FirstName="David"},
+            new Author{AuthorID=1284,LastName="Bakeley",FirstName="Reginald"},
+            new Author{AuthorID=9031,LastName="Rogers",FirstName="Donald"}
             };
-            courses.ForEach(s => context.Courses.Add(s));
+            authors.ForEach(s => context.Authors.Add(s));
             context.SaveChanges();
-            var enrollments = new List<Enrollment>
+            var genre = new List<Genre>
             {
-            new Enrollment{StudentID=1,CourseID=1050,Grade=Grade.A},
-            new Enrollment{StudentID=1,CourseID=4022,Grade=Grade.C},
-            new Enrollment{StudentID=1,CourseID=4041,Grade=Grade.B},
-            new Enrollment{StudentID=2,CourseID=1045,Grade=Grade.B},
-            new Enrollment{StudentID=2,CourseID=3141,Grade=Grade.F},
-            new Enrollment{StudentID=2,CourseID=2021,Grade=Grade.F},
-            new Enrollment{StudentID=3,CourseID=1050},
-            new Enrollment{StudentID=4,CourseID=1050,},
-            new Enrollment{StudentID=4,CourseID=4022,Grade=Grade.F},
-            new Enrollment{StudentID=5,CourseID=4041,Grade=Grade.C},
-            new Enrollment{StudentID=6,CourseID=1045},
-            new Enrollment{StudentID=7,CourseID=3141,Grade=Grade.A},
+            new Genre{GenreID=6676, GenreType="Fiction"},
+            new Genre{GenreID=5928, GenreType="How-To"},
+            new Genre{GenreID=5729, GenreType="Self-Help"},
+            new Genre{GenreID=1344, GenreType="Comedy"},
+            new Genre{GenreID=3298, GenreType="Nonfiction"}
             };
-            enrollments.ForEach(s => context.Enrollments.Add(s));
+            genre.ForEach(s => context.Genres.Add(s));
             context.SaveChanges();
         }
     }
