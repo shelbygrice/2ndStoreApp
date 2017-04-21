@@ -1,22 +1,23 @@
 ﻿@model IEnumerable<MVCStoreApp.Models.Book>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Books";
 }
 
-<h2>Index</h2>
+<h2>Books</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+@using (Html.BeginForm("Index", "Book", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AuthorID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GenreID)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
@@ -31,12 +32,6 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AuthorID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GenreID)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>

@@ -16,7 +16,7 @@ namespace MVCStoreApp.Controllers
         private StoreContext db = new StoreContext();
 
         // GET: Book
-        public ActionResult Index()
+        public ViewResult Index()
         {
             return View(db.Books.ToList());
         }
@@ -47,13 +47,20 @@ namespace MVCStoreApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookID,AuthorID,GenreID,Title,AuthorLastName,AuthorFirstName")] Book book)
+        public ActionResult Create([Bind(Include = "Title,AuthorLastName,AuthorFirstName")] Book book)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Books.Add(book);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Books.Add(book);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
             return View(book);
@@ -66,12 +73,23 @@ namespace MVCStoreApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
-            if (book == null)
+            var bookToUpdate = db.Books.Find(id);
+            if (TryUpdateModel(bookToUpdate, "",
+               new string[] { "Title", "AuthorLastName", "AuthorFirstName" }))
             {
-                return HttpNotFound();
+                try
+                {
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                catch (DataException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
             }
-            return View(book);
+            return View(bookToUpdate);
         }
 
         // POST: Book/Edit/5
@@ -91,11 +109,15 @@ namespace MVCStoreApp.Controllers
         }
 
         // GET: Book/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, bool? saveChangesError=false)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
             }
             Book book = db.Books.Find(id);
             if (book == null)
@@ -110,10 +132,16 @@ namespace MVCStoreApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Book book = db.Books.Find(id);
-            db.Books.Remove(book);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Book book = db.Books.Find(id);
+                db.Books.Remove(book);
+                db.SaveChanges();
+            }
+            catch (DataException)
+            {
+                return RedirectToAction("Delete", new { id = id, saveChangesError = true });
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace MVCStoreApp.Models
 {
     public class Book
-    {
+    { 
         public int BookID { get; set; }
         public int AuthorID { get; set; }
         public int GenreID { get; set; }
